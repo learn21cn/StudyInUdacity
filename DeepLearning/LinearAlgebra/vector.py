@@ -87,8 +87,8 @@ class Vector(object):
         return self.magnitude() < tolerance
 
     def is_parallel_to(self, v):
-        print(self.angle_with(v))
-        print(math.pi)
+        # print(self.angle_with(v))
+        # print(math.pi)
         return(self.is_zero() or self.angle_with(v) == 0 or self.angle_with(v) == math.pi)
 
     def is_orthogonal_to(self, v, tolerance=1e-10):

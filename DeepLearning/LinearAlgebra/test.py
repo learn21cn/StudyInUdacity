@@ -1,15 +1,17 @@
 from decimal import Decimal, getcontext
+
 from vector import Vector
 
 getcontext().prec = 30
 
+
 class Line(object):
-    
-    NO_NONZERO_ELTS_FOUND_MSG = 'No nozreo elements found'    
+
+    NO_NONZERO_ELTS_FOUND_MSG = 'No nonzero elements found'
 
     def __init__(self, normal_vector=None, constant_term=None):
         self.dimension = 2
-        
+
         if not normal_vector:
             all_zeros = ['0']*self.dimension
             normal_vector = Vector(all_zeros)
@@ -67,15 +69,15 @@ class Line(object):
                 return None
                 
 
+
+
     def set_basepoint(self):
         try:
             n = self.normal_vector.coordinates
-           
             c = self.constant_term
             basepoint_coords = ['0']*self.dimension
 
             initial_index = Line.first_nonzero_index(n)
-            # print(initial_index)
             initial_coefficient = n[initial_index]
 
             basepoint_coords[initial_index] = c/initial_coefficient
@@ -96,14 +98,14 @@ class Line(object):
             coefficient = round(coefficient, num_decimal_places)
             if coefficient % 1 == 0:
                 coefficient = int(coefficient)
-            
+
             output = ''
 
             if coefficient < 0:
                 output += '-'
             if coefficient > 0 and not is_initial_term:
                 output += '+'
-            
+
             if not is_initial_term:
                 output += ' '
 
@@ -112,7 +114,7 @@ class Line(object):
 
             return output
 
-        n = self.normal_vector.coordinates
+        n = self.normal_vector
 
         try:
             initial_index = Line.first_nonzero_index(n)
@@ -121,7 +123,7 @@ class Line(object):
             output = ' '.join(terms)
 
         except Exception as e:
-            if str(e) == Line.NO_NONZERO_ELTS_FOUND_MSG:
+            if str(e) == self.NO_NONZERO_ELTS_FOUND_MSG:
                 output = '0'
             else:
                 raise e
@@ -133,6 +135,7 @@ class Line(object):
 
         return output
 
+
     @staticmethod
     def first_nonzero_index(iterable):
         for k, item in enumerate(iterable):
@@ -140,22 +143,13 @@ class Line(object):
                 return k
         raise Exception(Line.NO_NONZERO_ELTS_FOUND_MSG)
 
+
 class MyDecimal(Decimal):
     def is_near_zero(self, eps=1e-10):
         return abs(self) < eps
 
-
-
-# ell1 = Line(normal_vector=Vector(['4.046','2.836']), constant_term='1.21')
-# ell2 = Line(normal_vector=Vector([10.115, '7.09']), constant_term='3.025')
-
-# ell1 = Line(normal_vector=Vector(['7.204','3.182']), constant_term='8.68')
-# ell2 = Line(normal_vector=Vector([8.172, '4.114']), constant_term='9.883')
-
-ell1 = Line(normal_vector=Vector(['1.182','5.562']), constant_term='6.744')
-ell2 = Line(normal_vector=Vector([1.773, '8.343']), constant_term='9.525')
-
-print('ell1 is parallel to ell2 ? :', ell1.is_parallel_to(ell2))
-print('ell1 is equal to ell2 ? :', ell1.__eq__(ell2))
+ell1 = Line(normal_vector=Vector(['4.046','2.836']), constant_term='1.21')
+ell2 = Line(normal_vector=Vector([10.115, '7.09']), constant_term='3.025')
+print('intersection1:', ell1.is_parallel_to(ell2))
+print('intersection1:', ell1.__eq__(ell2))
 print('intersection1:', ell1.intersection_with(ell2))
-
