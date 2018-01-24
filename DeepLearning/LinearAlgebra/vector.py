@@ -1,6 +1,7 @@
 import math
 from decimal import Decimal, getcontext
 
+# getcontext().prec = 15
 class Vector(object):
     def __init__(self, coordinates):
         self.CANNOT_NORMALIZE_ZERO_VECTOR_MSG = 'Can not normalize the zero vector'
