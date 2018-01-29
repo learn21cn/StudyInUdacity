@@ -11,11 +11,12 @@ class Test(object):
         
         self.basepoint = basepoint
         self.direction_vectors = direction_vectors
+
         # self.dimension = self.basepoint.dimension 
 
         # print('=======================')  
         # print(self.basepoint)
-        # print(self.direction_vectors)  
+        print(self.direction_vectors)  
 
         # print('=======================')     
 
