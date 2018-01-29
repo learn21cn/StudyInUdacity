@@ -19,15 +19,15 @@ class Parametrization(object):
 
         # print('=======================')     
 
-        # try:
-        #     print(direction_vectors)
-        #     for item in direction_vectors:
-        #         v = Vector(item)
-        #         print(v)                
-        #         assert v.dimension == self.dimension
+        try:
+            print(direction_vectors)
+            for item in direction_vectors:
+                v = Vector(item)
+                print(v)                
+                assert v.dimension == self.dimension
         
-        # except AssertionError:
-        #     raise Exception(BASEPT_AND_DIR_VECTORS_MUST_BE_IN_SAME_DIM_MSG)
+        except AssertionError:
+            raise Exception(BASEPT_AND_DIR_VECTORS_MUST_BE_IN_SAME_DIM_MSG)
 
 
 # Vector: (Decimal('-0.3010471533'), Decimal('-0.4919135404'), Decimal('0'))
