@@ -121,3 +121,47 @@ def scaleRow(M, r, scale):
 
 scaleRow(I,2,5)
 print(I)
+
+def addScaledRow(M, r1, r2, scale):
+    M[r1] = [scale * j + i for i,j in zip(M[r1],M[r2])]
+
+
+
+M = [[1,0,2,10],
+     [9,1,0,0],
+     [0,15,1,0],
+     [9,0,0,5]]
+
+result = [x for xx in M for x in xx if 2<x<10]
+
+result = [abs(x) for xx in M for x in xx if 2<x<10]
+
+result =[ [i,j, abs (M[i][j])] for i in range(len(M)) for j in range(i+1) ]
+
+
+m =[  abs (M[i][j]) for i in range(len(M)) for j in range(i+1) ]
+
+# print(max(M))
+# print(M.index(max(M)))
+
+print(max(m))
+
+print(result)
+# print(max(result))
+# print(list(zip(*result)))
+# 相当于上面的列表表达式
+for i in range(len(M)):
+    for j in range(i+1):
+        pass
+        # print(M[i][j])
+
+
+
+for j in range(len(M)):
+    col_list = [ abs(M[i][j]) for i in range(j,len(M))]
+    m = max(col_list)
+    i = j + col_list.index(m)
+    print(m,i)
+    
+        
+        
