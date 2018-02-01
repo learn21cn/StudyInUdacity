@@ -1,3 +1,5 @@
+
+
 def transpose(M):
     # new_col_count = len(M)
     print(M)
@@ -162,6 +164,10 @@ for j in range(len(M)):
     m = max(col_list)
     i = j + col_list.index(m)
     print(m,i)
+
+
+
+
     
-        
+ 
         
