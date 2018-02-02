@@ -1,5 +1,7 @@
 {
     //"python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Python36_64\\python.exe"
 
-    "python.pythonPath": "C:\\Users\\ITCenter\\AppData\\Local\\conda\\conda\\envs\\py3\\python.exe"
+    //"python.pythonPath": "C:\\Users\\ITCenter\\AppData\\Local\\conda\\conda\\envs\\py3\\python.exe"
+
+    "python.pythonPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\Anaconda3_64\\envs\\py3\\python.exe"
 }
