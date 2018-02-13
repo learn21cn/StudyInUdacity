@@ -242,6 +242,7 @@ print(a)
 #%%
 a = [1, 2, 3, 4, 5]
 slice = a[:3] 
+# print(slice)
 slice[0] = 6
 # 这里没变
 print(a)
