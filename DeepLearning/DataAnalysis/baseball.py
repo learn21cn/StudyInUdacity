@@ -72,6 +72,7 @@ cf = teams_df[teams_df['yearID'] >= 1985]
 print(len(cf))
 
 onlist=['yearID', 'teamID', 'lgID']
+# 其实这里合并意义不大，因为未考虑时间因素，此处仅做测试
 new_teams_df = new_combine_dfs(cf, mean_salaries_df, onlist)
 new_teams_df.head()
 print(len(new_teams_df))
@@ -161,6 +162,7 @@ ba = h / ab
 # 上垒率（OBP）
 obp = (h + bb + hbp) / (ab + bb + hbp + sf)
 
+# 与工资的相关性未考虑时间因素
 # print(correlation(salary, ab))
 # print(correlation(salary, r))
 # print(correlation(salary, h))
@@ -214,14 +216,8 @@ print(correlation(w, ba))
 print(correlation(w, obp))
 print(correlation(w, salary))
 
-#%%
-# Pitching 
-
-
-
 
 #%%
-
 
 on_list = ['playerID', 'yearID', 'teamID', 'lgID']
 new_batting_df = new_combine_dfs(salaries_df, batting_df, on_list)
@@ -317,7 +313,7 @@ nf2.describe()
 
 
 #%%
-
+# 用来划分工资水平
 def pct_rank_qcut(series, n):
     edges = pd.Series([float(i) / n for i in range(n + 1)])
     f = lambda x: (edges >= x).values.argmax()
@@ -498,6 +494,7 @@ print(example_df['value'].mean())
 
 example_df.sort_values(['value'])
 #%%
+
 import pandas as pd
 import numpy as np
 from pandas import *

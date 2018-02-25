@@ -301,6 +301,8 @@ b = pd.Series([1, 2, 1, 2])
   
 print(a + b)
 print(a * 2)
+print(a * b)
+print(a / b)
 print(a >= 3)
 print(a[a >= 3])
 
