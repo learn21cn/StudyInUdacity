@@ -16,6 +16,16 @@ batting_df = pd.read_csv(battinf_filename)
 print(salaries_df.head())
 salaries_df.describe()
 
+
+#%%
+import pandas as pd
+import numpy as np
+
+X = np.array(salaries_df[['yearID','playerID']])
+y = np.array(salaries_df['salary'])
+
+print(X)
+
 #%%
 grouped_data = salaries_df.groupby(['yearID', 'teamID', 'lgID'], as_index=False)
 # print(grouped_data.groups)

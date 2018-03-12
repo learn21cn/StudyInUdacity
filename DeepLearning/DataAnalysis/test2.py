@@ -1,6 +1,51 @@
+#%%
 import numpy as np
+import math
 
+earth_mass = 5.97e24 # kg
+earth_radius = 6.378e6 # m (at equator)
+gravitational_constant = 6.67e-11 # m3 / kg s2
+moon_mass = 7.35e22 # kg
+moon_radius = 1.74e6 # m
+moon_distance = 400.5e6 # m (actually, not at all a constant)
+moon_period = 27.3 * 24.0 * 3600. # s
+moon_initial_angle = math.pi / 180. * -61. # radian
 
+total_duration = 12. * 24. * 3600. # s
+marker_time = 0.5 * 3600. # s
+tolerance = 100000. # m
+
+def moon_position(time):
+    # Task 1: Compute the moon's position (a vector) at time t. Let it start at moon_initial_angle, not on the horizontal axis.   
+    ###Your code here.
+    moon_angle = moon_initial_angle + 2.0 * math.pi * time / moon_period
+    position = numpy.zeros(2)
+    position[0] = moon_distance * numpy.array(math.cos(moon_angle))
+    position[2] = moon_distance * numpy.array(math.sin(moon_angle))
+
+    return position
+def acceleration(time, position):
+    # Task 2: Compute the spacecraft's acceleration due to gravity
+	###Your code here.
+    v = 1
+	moon_pos = moon_position(time)
+    vector_from_moon = position - moon_pos
+    vector_from_earth = position    
+    acc = 0
+    return v
+
+	# # acc = -gravitational_constant * ((earth_mass / numpy.linalg.norm(vector_from_earth)** 3) * vector_from_earth + (moon_mass / numpy.linalg.norm(vector_from_moon)** 3) * vector_from_moon)
+    
+#%%
+h = 1
+num_steps = 5
+x = np.zeros([11,2])
+x[0, 0] = 1
+x[0, 1] = 2
+
+for step in range(num_steps):
+    x[step + 1] = x[step] + h * x[step] 
+print(x)
 #%%
 
 a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
