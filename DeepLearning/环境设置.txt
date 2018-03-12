@@ -1,0 +1,91 @@
+# 先安装Anaconda
+
+
+
+# 管理员身份打开 Anaconda Prompt，这是在默认环境下，查看安装的内容
+
+conda list
+
+
+
+# 要更新包，请使用 conda update package_name。
+
+# 打开 Anaconda Prompt，并在提示是否更新的时候输入 y（Yes）以便让更新继续
+
+# 如果想更新环境中的所有包（这样做常常很有用）
+
+conda upgrade --all
+
+
+
+#创建虚拟环境
+
+# 要创建环境，请在终端中使用 conda create -n env_name list of packages。
+
+# 在这里，-n env_name 设置环境的名称（-n 是指名称），而 list of packages 是要安装在环境中的包的列表。
+
+# 例如，要创建名为 my_env 的环境并在其中安装 numpy，请键入 conda create -n my_env numpy
+
+# 注意虚拟环境下的查看与更新同上面一样 
+
+# 如果安装python3
+
+conda create -n py3 python=3
+
+activate py3
+
+
+
+# 如果需要的是python2版本
+
+# conda create -n py2 python=2
+
+# 或者在新建环境的同时安装多个包
+
+# conda create -n py2 python=2 numpy pandas
+
+# activate py2
+
+
+
+# 先activate，进入虚拟环境
+
+(py2) C:\Users\learn\Documents>
+
+# 注意是在虚拟环境下安装，如上面带有（py2）,然后下面的相同
+
+conda install numpy pandas seaborn matplotlib jupyter
+
+conda install scipy scikit-learn
+
+
+
+# 要卸载包，请使用 conda remove package_name。
+
+
+
+# 如果不知道要找的包的确切名称，可以尝试使用 conda search search_term 进行搜索。
+
+conda search beautifulsoup
+
+
+
+# 虚拟环境的管理
+
+# 可以使用 conda env export > environment.yaml 将包保存为 YAML。
+
+# 命令的第一部分 conda env export 用于输出环境中的所有包的名称（包括 Python 版本）。
+
+
+
+# 要通过环境文件创建环境，请使用 conda env create -f environment.yaml。这会创建一个新环境，
+
+# 而且它具有同样的在 environment.yaml 中列出的库。
+
+
+
+# 可以使用 conda env list 列出你创建的所有环境
+
+
+
+# 可以使用 conda env remove -n env_name 删除指定的环境（在这里名为 env_name）。
