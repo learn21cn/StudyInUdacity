@@ -1,0 +1,17 @@
+# 项目地址： https://github.com/yenchenlin/DeepLearningFlappyBird
+
+# 激活虚拟环境，使用前面搭建好的，参见1tensorflow安装
+activate flappybird
+
+# 在虚拟环境中安装，注意这里直接opencv即可，指定opencv3反而可能会出错误
+conda install -c menpo opencv
+pip install pygame
+
+# 将项目复制下来，这个不必是在虚拟环境中，可放到任意位置
+git clone https://github.com/yenchenlin/DeepLearningFlappyBird.git
+
+# 在虚拟环境中切换到上面复制的项目中的DeepLearningFlappyBird文件夹
+cd DeepLearningFlappyBird
+# 之后在虚拟环境中执行下面的命令即可
+python deep_q_network.py
+

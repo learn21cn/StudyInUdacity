@@ -1,0 +1,74 @@
+# 项目地址： https://github.com/lengstrom/fast-style-transfer
+
+# 创建虚拟环境
+conda create -n style-transfer python=3
+# 安装tensorflow，下载sse2版 https://github.com/fo40225/tensorflow-windows-wheel/tree/master/1.7.0/py36/CPU
+# 这个编译版解决了1.70版tensorflow在旧的CPU上不能使用的问题
+activate style-transfer
+pip install --upgrade --ignore-installed tensorflow-1.7.0-cp36-cp36m-win_amd64.whl
+conda install scipy pillow
+pip install moviepy
+# 到这里环境就建好了
+
+# 之后（当然也可以先做）
+在电脑上从fast-style-transfer资源库中下载 Zip 归档文件（参见项目地址）并解压。
+将checkpoint文件夹（一些检查点文件）其放在 fast-style-transfer 文件夹中。检查点文件是已经调谐参数的模型。使用此检查点文件后我们不需要再训练该模型，可以直接使用。
+将你要调整格式的图片放到 fast-style-transfer 文件夹，此处可以将input文件夹放入。
+进入你之前创建的 Conda 环境（如果不在里面的话）。
+在终端里，转到 fast-style-transfer 文件夹并输入
+python evaluate.py --checkpoint ./rain-princess.ckpt --in-path <path_to_input_file> --out-path ./output_image.jpg
+上面是通用的命令，示例如下：
+python evaluate.py --checkpoint ./checkpoint\rain-princess.ckpt --in-path ./input\1.png --out-path ./output\1.png
+之后会在fast-style-transfer文件夹中生成output文件夹并包含新生成的图片（可使用不同的检查点文件试一下，这里用的是rain-princess.ckpt）
+
+# 遇到的问题：
+raise NeedDownloadError('Need ffmpeg exe. '
+imageio.core.fetching.NeedDownloadError: Need ffmpeg exe. You can download it by
+calling:
+imageio.plugins.ffmpeg.download()
+
+# 解决办法：
+# 方案一：
+# 在虚拟环境中输入python
+(style-transfer) ..\fast-style-transfer-master> python
+进入python后，输入：
+import imageio
+imageio.plugins.ffmpeg.download()
+然后退出python模式，再次运行
+# 方案二： 
+安装windows下的ffmpeg命令行工具，安装的步骤十分简单，分为：下载、解压、配置环境变量。
+下载，进入 http://ffmpeg.org/download.html#build-windows，下载页面，
+跳转到 https://ffmpeg.zeranoe.com/builds/win64/static/ ，找到 ffmpeg-latest-win64-static.zip 这个最新的版本；
+解压 ffmpeg-latest-win64-static.zip 文件到指定目录；
+将解压后的文件目录中bin目录（包含ffmpeg.exe）添加进path环境变量中；
+重新启动虚拟环境的cmd，输入 ffmpeg -version，可验证当前系统是否识别 ffmpeg，以及查看 ffmpeg 的版本；
+之后，虚拟环境中运行
+python evaluate.py --checkpoint ./rain-princess.ckpt --in-path <path_to_input_file> --out-path ./output_image.jpg
+一般推荐使用方案二
+
+# 附命令
+python evaluate.py --checkpoint ./checkpoint\rain-princess.ckpt --in-path ./input\1.png --out-path ./output\1-rain-princess.png
+python evaluate.py --checkpoint ./checkpoint\la-muse.ckpt --in-path ./input\1.png --out-path ./output\1-la-muse.png
+python evaluate.py --checkpoint ./checkpoint\scream.ckpt --in-path ./input\1.png --out-path ./output\1-scream.png
+python evaluate.py --checkpoint ./checkpoint\udnie.ckpt --in-path ./input\1.png --out-path ./output\1-udnie.png
+python evaluate.py --checkpoint ./checkpoint\wave.ckpt --in-path ./input\1.png --out-path ./output\1-wave.png
+python evaluate.py --checkpoint ./checkpoint\wreck.ckpt --in-path ./input\1.png --out-path ./output\1-wreck.png
+
+python evaluate.py --checkpoint ./checkpoint\rain-princess.ckpt --in-path ./input\2.png --out-path ./output\2-rain-princess.png
+python evaluate.py --checkpoint ./checkpoint\la-muse.ckpt --in-path ./input\2.png --out-path ./output\2-la-muse.png
+python evaluate.py --checkpoint ./checkpoint\scream.ckpt --in-path ./input\2.png --out-path ./output\2-scream.png
+python evaluate.py --checkpoint ./checkpoint\udnie.ckpt --in-path ./input\2.png --out-path ./output\2-udnie.png
+python evaluate.py --checkpoint ./checkpoint\wave.ckpt --in-path ./input\2.png --out-path ./output\2-wave.png
+python evaluate.py --checkpoint ./checkpoint\wreck.ckpt --in-path ./input\2.png --out-path ./output\2-wreck.png
+
+# 文件名
+la-muse.ckpt
+scream.ckpt
+udnie.ckpt
+wave.ckpt
+wreck.ckpt
+
+
+
+
+

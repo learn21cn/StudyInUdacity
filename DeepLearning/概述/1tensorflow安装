@@ -1,0 +1,22 @@
+# 安装cpu版本的TensorFlow
+# 本文使用Anaconda创建虚拟环境进行安装，先安装Anaconda，
+# 之后创建虚拟环境
+conda create --name=flappybird python=3
+# 此为安装命令，目前的网速不必使用清华源镜像，安装完后目前为最新版1.7，但是老的CPU直接使用此命令会有问题
+activate flappybird
+pip install --upgrade --ignore-installed tensorflow
+
+# 可能遇到的问题
+安装完后输入 python 进入python命令行，输入 import tensorflow，可能会有以下错误
+ImportError: DLL load failed: 动态链接库(DLL)初始化例程失败 和 ModuleNotFoundError: No module named '_pywrap_tensorflow_internal'
+# 原因：新版本的 TensorFlow（1.6及以上）会出现此问题，根据 TensorFlow 1.6.0 的发布说明，该版本会使用 AVX 指令，所以可能会在旧 CPU 上不能运行
+# 方案： https://github.com/tensorflow/tensorflow/issues/17393
+使用旧版 TensorFlow，比如你可以使用 pip install tensorflow==1.5 来安装 1.5 版本，安装之前最好卸载已经安装的。
+使用重新编译好的版本：https://github.com/fo40225/tensorflow-windows-wheel
+找到对应的版本（如1.7）下载，之后在虚拟环境中安装
+activate flappybird
+pip install --upgrade --ignore-installed tensorflow-1.7.0-cp36-cp36m-win_amd64.whl
+
+#其他问题参考“Windows10 64 位下安装 TensorFlow - 官方原生支持”：
+https://blog.csdn.net/u010099080/article/details/53418159
+
