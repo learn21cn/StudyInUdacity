@@ -38,7 +38,7 @@ features_test, targets_test = test_data.drop('admit', axis=1), test_data['admit'
 print(features[:10])
 
 #%%
-
+# 激活函数
 def sigmoid(x):
     """
     Calculate sigmoid
@@ -46,9 +46,123 @@ def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
 
+#%%
+# 测试数据
+# 用于理解程序的过程
+weights_input_hidden_test = np.random.normal(scale=1 / 6 ** .5,
+                                        size=(6, 2))
+weights_hidden_output_test = np.random.normal(scale=1 / 6 ** .5,
+                                         size=2)
+print('weights_input_hidden_test:')
+print(weights_input_hidden_test)
+print('weights_hidden_output_test:')
+print(weights_hidden_output_test)
+
+del_w_input_hidden_test = np.zeros(weights_input_hidden_test.shape)
+del_w_hidden_output_test = np.zeros(weights_hidden_output_test.shape)
+
+print('del_w_input_hidden_test:')
+print(del_w_input_hidden_test)
+print('del_w_hidden_output_test:')
+print(del_w_hidden_output_test)
+
+
+a = np.zeros(weights_hidden_output_test.shape)
+print('测试加法')
+print(a)
+print(a + 5)
+n = np.array([ 2, -1])
+b = np.array([ 0.5, -0.5 ,  0.5, 1, 1, 1])
+print(b)
+print(b[:, None])
+print('测试乘法')
+print(n * b[:, None])
+
+
+features_miny = features[:5]
+targets_miny = targets[:5]
+
+count = 0
+for x, y in zip(features_miny.values, targets_miny):    
+    
+    count = count + 1
+    print('第'+ str(count) + '次计算开始')
+    # TODO: Calculate the output
+    # x在此处是个6维向量
+    print('x:')
+    print(x)
+    # 此处为2维向量，由 (1，6)点乘(6,2)得到
+    hidden_input = np.dot(x, weights_input_hidden_test)
+    print('hidden_input:')
+    print(hidden_input)
+
+    # 此处为2维向量
+    hidden_output = sigmoid(hidden_input)
+    print('hidden_output:')
+    print(hidden_output)
+
+    # 两个2维向量点乘得到一个具体的值，之后是使用激活函数处理
+    output = sigmoid(np.dot(hidden_output, weights_hidden_output_test))
+    # 得到一个具体的值
+    print('output:')
+    print(output)
+
+    ## Backward pass ##
+    # TODO: Calculate the network's prediction error
+    # 得到一个具体的值
+    error = y - output
+    print('error:')
+    print(error)
+
+    # TODO: Calculate error term for the output unit
+    # 计算输出层δ，误差乘以激活函数导数，​此处得到一个具体的值
+    output_error_term = error * output * (1 - output)
+    print('output_error_term:')
+    print(output_error_term)   
+
+    ## propagate errors to hidden layer
+
+    # TODO: Calculate the hidden layer's contribution to the error
+    # (1,) 点乘2维向量，此处为2维向量，注意不是矩阵
+    hidden_error = np.dot(output_error_term, del_w_hidden_output_test)
+    print('hidden_error:')
+    print(hidden_error)
+
+    # TODO: Calculate the error term for the hidden layer
+    # 计算隐藏层δ，误差乘以激活函数导数，​此处得到一个2维向量，分别对应两个隐藏层
+    hidden_error_term = hidden_error * hidden_output * (1 - hidden_output)
+    print('hidden_error_term:')
+    print(hidden_error_term)
+
+    # TODO: Update the change in weights
+    # 2维向量加一个具体的数 ΔW=δa，每个维度分别加上
+    del_w_hidden_output_test += output_error_term * hidden_output
+    print('del_w_hidden_output_test:')
+    print(del_w_hidden_output_test)
+    # (6,2)+(6,2)
+    del_w_input_hidden_test += hidden_error_term * x[:, None]
+    print('x[:, None]:')
+    print(x[:, None])
+    # 注意这里是乘法，不是点乘，这里2维向量乘以6维向量，得到一个(6，2)
+    print(hidden_error_term * x[:, None])
+    print('del_w_input_hidden_test:')
+    print(del_w_input_hidden_test)
+
+    print('第'+ str(count) + '次计算结束')
+    print('------------------------------------')
+
+
+print('new del_w_input_hidden_test:')
+print(del_w_input_hidden_test)
+print('new del_w_hidden_output_test:')
+print(del_w_hidden_output_test)
+
+#%%
+# 以下是正式部分
 # Hyperparameters
 n_hidden = 2  # number of hidden units
 epochs = 900
+# 通常由η表示
 learnrate = 0.005
 
 n_records, n_features = features.shape
@@ -60,8 +174,6 @@ weights_input_hidden = np.random.normal(scale=1 / n_features ** .5,
 weights_hidden_output = np.random.normal(scale=1 / n_features ** .5,
                                          size=n_hidden)
 
-# print('weights_input_hidden:' ,weights_input_hidden)
-# print('weights_hidden_output:' ,weights_hidden_output)
 
 for e in range(epochs):
     del_w_input_hidden = np.zeros(weights_input_hidden.shape)
