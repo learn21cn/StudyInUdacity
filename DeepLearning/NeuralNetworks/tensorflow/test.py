@@ -280,4 +280,106 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     print(sess.run(logits, feed_dict={keep_prob: 0.5}))
 
+#-----------------------------------------
+#%%
 
+
+a = tf.Variable(tf.random_normal([2, 2, 2, 1]))
+with tf.Session() as sess:
+    sess.run(tf.global_variables_initializer())    
+    print(sess.run(a))
+
+
+#%%
+"""
+Setup the strides, padding and filter weight/bias such that
+the output shape is (1, 2, 2, 3).
+"""
+# import tensorflow as tf
+# import numpy as np
+
+# `tf.nn.conv2d` requires the input be 4D (batch_size, height, width, depth)
+# (1, 4, 4, 1)
+x = np.array([
+    [0, 1, 0.5, 10],
+    [2, 2.5, 1, -8],
+    [4, 0, 5, 6],
+    [15, 1, 2, 3]], dtype=np.float32).reshape((1, 4, 4, 1))
+X = tf.constant(x)
+
+# print(x)
+
+
+
+def conv2d(input):
+    # Filter (weights and bias)
+    # The shape of the filter weight is (height, width, input_depth, output_depth)
+    # The shape of the filter bias is (output_depth,)
+    # TODO: Define the filter weights `F_W` and filter bias `F_b`.
+    # NOTE: Remember to wrap them in `tf.Variable`, they are trainable parameters after all.
+    
+    F_W = tf.Variable(tf.truncated_normal((2, 2, 1, 3)))
+    F_b = tf.Variable(tf.zeros(3))  
+
+    # TODO: Set the stride for each dimension (batch_size, height, width, depth)
+    strides = [1, 2, 2, 1]
+    # TODO: set the padding, either 'VALID' or 'SAME'.
+    padding = 'VALID'
+    # https://www.tensorflow.org/versions/r0.11/api_docs/python/nn.html#conv2d
+    # `tf.nn.conv2d` does not include the bias computation so we have to add it ourselves after.
+    return tf.nn.conv2d(input, F_W, strides, padding) + F_b
+
+out = conv2d(X)
+
+# 关于以上的注解
+# 想要把输入的 (1, 4, 4, 1) 转变成 (1, 2, 2, 3)。padding 方法可选择 'VALID'。这更容易理解，也得到了想要的结果。
+# out_height = ceil(float(in_height - filter_height + 1) / float(strides[1]))
+# out_width  = ceil(float(in_width - filter_width + 1) / float(strides[2]))
+# 把值带入
+# out_height = ceil(float(4 - 2 + 1) / float(2)) = ceil(1.5) = 2
+# out_width  = ceil(float(4 - 2 + 1) / float(2)) = ceil(1.5) = 2
+# 要把深度从 1 变成 3。滤波器的输出做相应的设置：
+
+# F_W = tf.Variable(tf.truncated_normal((2, 2, 1, 3))) # (height, width, input_depth, output_depth)
+# F_b = tf.Variable(tf.zeros(3)) # (output_depth)
+# 输入的深度是 1，所以选择 1 作为滤波器的 input_depth。
+
+#%%
+"""
+Set the values to `strides` and `ksize` such that
+the output shape after pooling is (1, 2, 2, 1).
+"""
+# import tensorflow as tf
+# import numpy as np
+
+# `tf.nn.max_pool` requires the input be 4D (batch_size, height, width, depth)
+# (1, 4, 4, 1)
+x = np.array([
+    [0, 1, 0.5, 10],
+    [2, 2.5, 1, -8],
+    [4, 0, 5, 6],
+    [15, 1, 2, 3]], dtype=np.float32).reshape((1, 4, 4, 1))
+X = tf.constant(x)
+
+def maxpool(input):
+    # TODO: Set the ksize (filter size) for each dimension (batch_size, height, width, depth)
+    ksize = [1, 2, 2, 1]
+    # TODO: Set the stride for each dimension (batch_size, height, width, depth)
+    strides = [1, 2, 2, 1]
+    # TODO: set the padding, either 'VALID' or 'SAME'.
+    padding = 'VALID'
+    return tf.nn.max_pool(input, ksize, strides, padding)
+    
+out = maxpool(X)
+
+# 注解
+# 要把输入的 (1, 4, 4, 1) 转变成 (1, 2, 2, 1)。
+# padding 方法选择 'VALID'
+
+# out_height = ceil(float(in_height - filter_height + 1) / float(strides[1]))
+# out_width  = ceil(float(in_width - filter_width + 1) / float(strides[2]))
+# 替换入值：
+# out_height = ceil(float(4 - 2 + 1) / float(2)) = ceil(1.5) = 2
+# out_width  = ceil(float(4 - 2 + 1) / float(2)) = ceil(1.5) = 2
+# 深度在池化的时候不变，所以不用担心。
+# 注意：有不止一种方法得到正确的输出维度
