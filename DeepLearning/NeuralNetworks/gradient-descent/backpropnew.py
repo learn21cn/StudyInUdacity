@@ -4,7 +4,7 @@
 import numpy as np
 import pandas as pd
 import os
-# 注意这里的工作目录
+# 注意这里是notebook的工作目录
 
 np.random.seed(21)
 cwd = os.getcwd()
