@@ -47,3 +47,7 @@ test_int_to_vocab = {word_i: word for word_i, word in enumerate(['this', 'is', '
 
 word = pick_word(test_probabilities, test_int_to_vocab)
 print(word)
+
+#%%
+index = np.random.randint(1,5)
+print(index)
