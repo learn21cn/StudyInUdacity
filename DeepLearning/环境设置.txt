@@ -1,12 +1,8 @@
-# 先安装Anaconda
-
-
+﻿# 先安装Anaconda
 
 # 管理员身份打开 Anaconda Prompt，这是在默认环境下，查看安装的内容
 
 conda list
-
-
 
 # 要更新包，请使用 conda update package_name。
 
@@ -15,8 +11,6 @@ conda list
 # 如果想更新环境中的所有包（这样做常常很有用）
 
 conda upgrade --all
-
-
 
 #创建虚拟环境
 
@@ -56,8 +50,9 @@ activate py3
 
 conda install numpy pandas seaborn matplotlib jupyter
 
-conda install scipy scikit-learn
+conda install scipy scikit-learn scikit-image
 
+conda install tqdm
 
 
 # 要卸载包，请使用 conda remove package_name。
@@ -77,15 +72,37 @@ conda search beautifulsoup
 # 命令的第一部分 conda env export 用于输出环境中的所有包的名称（包括 Python 版本）。
 
 
-
 # 要通过环境文件创建环境，请使用 conda env create -f environment.yaml。这会创建一个新环境，
 
 # 而且它具有同样的在 environment.yaml 中列出的库。
 
-
-
 # 可以使用 conda env list 列出你创建的所有环境
 
-
-
 # 可以使用 conda env remove -n env_name 删除指定的环境（在这里名为 env_name）。
+
+----------------------------------------------
+# 确认python版本是否正常
+python --version
+
+# 确认Anaconda
+conda env list
+
+# 确认显卡是否正常
+nvidia-smi
+
+-------------------------------------------------
+可以在终端输入查询命令如下：
+
+# 进入终端
+python
+
+import tensorflow as tf
+
+# 查询tensorflow版本
+tf.__version__
+
+# 查询tensorflow安装路径为:
+tf.__path__
+
+# 查询keras版本
+print(keras.__version__)  

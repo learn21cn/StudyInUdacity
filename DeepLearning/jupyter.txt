@@ -1,0 +1,35 @@
+设置Jupyter notebook
+
+cd ~
+jupyter notebook --generate-config
+Writing default config to: /home/ubuntu/.jupyter/jupyter_notebook_config.py
+
+jupyter notebook password
+
+Wrote hashed password to /home/ubuntu/.jupyter/jupyter_notebook_config.json
+
+设置Jupyter notebook 可以外部访问
+sudo vim ~/.jupyter/jupyter_notebook_config.py
+按I按钮进入 Insert 模式
+进行如下设置：
+c.NotebookApp.ip='*'
+c.NotebookApp.open_browser = False
+c.NotebookApp.port =8888
+
+编辑完成！有个冒号，注意
+依次按 Esc  ->  :  -> w -> q ->回车 
+
+启动Jupyter notebook
+jupyter notebook 路径名称
+
+
+测试Jupyter notebook
+ip + 端口
+地址：http://e...amazonaws.com:8888
+输入密码后登陆
+
+注意的是需要更改.ipynb文件的读写权限，否则可能不能保存
+
+sudo chmod -R 777 文件夹 
+
+

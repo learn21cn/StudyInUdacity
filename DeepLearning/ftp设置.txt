@@ -1,0 +1,71 @@
+安装vsftpd
+sudo apt-get update
+sudo apt-get install vsftpd
+
+重新安装:apt-get --reinstall install vsftpd
+卸载并清除配置文件：apt-get -purge remove vsftpd
+
+判断vsftpd是否安装成功
+sudo service vsftpd restart 
+重启vsftpd服务-->回车-->vsftpd处于运行状态，说明安装成功
+
+
+启动vsftp:
+sudo service vsftpd start
+或指定路径，下同(注意：/etc/init.d/路径可能不同)：
+/etc/init.d/vsftpd start
+重启
+/etc/init.d/vsftpd restart
+停止vsftp：
+service vsftpd stop
+/etc/init.d/vsftpd stop
+
+安装后vsftp默认会创建一个名为ftp的用户，用户目录在/srv/ftp，好像匿名用户也会使用这个设置。
+新建"/home/uftp"目录作为用户主目录
+sudo mkdir /home/uftp
+sudo ls /home
+
+新建用户uftp并设置密码
+这里使用/usr/sbin/nologin shell阻止ftp用户访问bash shell
+sudo useradd -d /home/uftp -M uftp -s /usr/sbin/nologin
+sudo passwd uftp
+
+然后将目录/home/uftp的所属者和所属组都改为uftp：
+sudo chown uftp:uftp /home/uftp
+
+sudo chmod 777 /home/uftp
+
+允许登录访问nologin shell。打开/etc/shells并将下面一行添加到末尾
+/usr/sbin/nologin 
+
+相关配置
+sudo vim /etc/vsftpd.conf
+注销掉，关闭匿名访问
+#anonymous_enable=YES
+去掉注销
+local_enable=YES
+
+向文件中添加"userlist_deny=NO
+userlist_enable=YES 
+userlist_file=/etc/vsftpd/user_list
+seccomp_sandbox=NO
+pam_service_name=ftp
+
+取消下面两行的注释(行号:29和33)
+write_enable=YES 
+local_umask=022 
+取消下面这行的注释(行号:120),可以阻止访问home目录之外的其它目录
+chroot_local_user=YES 
+添加下面一行到文件末尾
+allow_writeable_chroot=YES 
+
+服务器打开20 - 21 端口
+
+重启
+sudo restart vsftpd
+如果不能连接
+将客户端的链接工具设置为主动模式
+
+
+重启vsftpd
+sudo restart vsftpd
